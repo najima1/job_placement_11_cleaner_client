@@ -3,7 +3,7 @@ require("dotenv").config()
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const uri = process.env.URI
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
-var jwt = require('jsonwebtoken');
+
 
 const database = client.db("Accessories")
 const all_product = database.collection("all_accessories")
@@ -141,6 +141,5 @@ module.exports = {
     get_review_byId,
     get_all_product_review,
     deleteSingleReview,
-    generateJWTtoken,
-    verifyToken
+
 }
