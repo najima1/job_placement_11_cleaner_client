@@ -2,7 +2,7 @@ const express = require("express")
 require("dotenv").config()
 const app = express()
 const cors = require("cors")
-const { getAllProduct, getSingleProduct, userReview, get_review_byId, get_all_product_review, deleteSingleReview } = require("./controlar")
+const { getAllProduct, getSingleProduct, userReview, get_review_byId, get_all_product_review, deleteSingleReview, verifyToken } = require("./controlar")
 const port = process.env.PORT || 5000
 
 app.use(cors())
@@ -12,8 +12,15 @@ app.use(express.urlencoded({ extended: true }))
 
 const run = async () => {
     try {
+        app.get('/', (req, res) => {
+            res.send({
+                status: 200,
+                message: 'done'
+            })
+        })
+
         //get all product
-        app.get("/allProducts", getAllProduct)
+        app.get("/allProducts", verifyToken, getAllProduct)
 
         // get single product with id
         app.get("/allProduct/:id", getSingleProduct)
@@ -29,6 +36,9 @@ const run = async () => {
 
         //delete single review by id
         app.delete('/delete_review/:id', deleteSingleReview)
+
+
+
 
     } catch (error) {
         console.log(error.message);
